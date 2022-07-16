@@ -1,0 +1,92 @@
+* {
+  background-color: yellow;
+  font-family: "Orbitron", sans-serif;
+  font-size: 62.5%;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+header {
+  height: 5%;
+  width: 100%;
+  z-index: 5;
+  position: fixed;
+  top: 0%;
+}
+
+nav {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  height: 100%;
+  background-color: black;
+  align-items: center;
+}
+
+nav > a {
+  justify-self: flex-start;
+}
+
+ul {
+  background-color: black;
+  display: flex;
+  justify-content: space-around;
+  gap: 10%;
+}
+
+a,
+li {
+  list-style: none;
+  text-decoration: none;
+  font-size: 2rem;
+  background-color: black;
+  color: yellow;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  line-height: 5.5rem;
+  position: relative;
+  height: 100vh;
+}
+
+div {
+  border: 1px black solid;
+}
+
+img {
+  width: 25%;
+  align-self: center;
+}
+
+#durationDisplay {
+  position: absolute;
+  font-size: 1.8em;
+  width: 10%;
+  top: 43vh;
+  margin: 1%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+footer {
+  height: 5%;
+  font-size: 3em;
+  position: fixed;
+  bottom: 0;
+}
+
+a:active {
+  transform: scale(90%);
+  background-color: yellow;
+  color: black;
+}
