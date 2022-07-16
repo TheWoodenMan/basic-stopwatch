@@ -59,7 +59,7 @@ function StopWatch() {
     duration = endTime - startTime;
     minutes = Math.floor(duration / 60000);
     seconds = ((duration % 60000) / 1000).toFixed(0);
-    hundredths = (duration % 100).toFixed(0);
+    hundredths = duration % 100;
     self.displayUpdate();
   };
 
