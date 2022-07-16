@@ -8,23 +8,23 @@ let durationDisplay = document.getElementById("durationDisplay");
 // Constructor function
 function StopWatch() {
   // Private variables
-  let startTime,
-    endTime,
-    running,
-    duration,
-    minutes,
-    seconds,
+  let startTime = 0,
+    endTime = 0,
+    running = 0,
+    duration = 0,
+    difference = 0,
+    minutes = 0,
+    seconds = 0,
     hundredths = 0;
+  let intervalId;
+  const self = this;
 
   this.start = function () {
     // Method to start the timer
     if (running) {
       throw new Error("Stopwatch has already started!");
     } else {
-      running = true;
-      console.log("Stopwatch Started");
-      startTime = new Date();
-      window.setInterval(this.timeUpdate, 1000);
+      self.startTimer();
     }
   };
 
@@ -33,58 +33,98 @@ function StopWatch() {
     if (!running) {
       throw new Error("Stopwatch is not started!");
     } else {
-      running = false;
-      console.log("Stopwatch Stopped");
-      this.timeCalc;
-      this.displayUpdate;
+      self.stopTimer();
     }
   };
 
+  this.startTimer = function () {
+    //  Record start time, start Interval timer.
+    running = true;
+    console.log("Stopwatch Started");
+    intervalId = setInterval(self.updateTime, 100);
+    startTime = Date.now() - duration;
+  };
+
+  this.stopTimer = function () {
+    // stop timer, calculate and assign the different times
+    running = false;
+    console.log("Stopwatch Stopped");
+    clearInterval(intervalId);
+    self.updateTime();
+  };
+
+  this.updateTime = function () {
+    // All time calculations for display
+    endTime = Date.now();
+    duration = endTime - startTime;
+    minutes = Math.floor(duration / 60000);
+    seconds = ((duration % 60000) / 1000).toFixed(0);
+    hundredths = (duration % 100).toFixed(0);
+    self.displayUpdate();
+  };
+
+  this.displayUpdate = function () {
+    // Update the html display
+    durationDisplay.innerHTML = `<span class="hundreds">${
+      minutes < 10 ? "0" : ""
+    }${minutes}</span>:<span class="seconds">${
+      seconds < 10 ? "0" : ""
+    }${seconds}</span>:<span class="hundredths">${
+      hundredths < 10 ? "0" : ""
+    }${hundredths}</span>`;
+  };
+
   this.reset = function () {
-    // Method to reset all variables
+    // Method to execute a reset.
     if (!running) {
       console.log("Stopwatch Reset");
-      this.resetNums;
+      self.resetNums();
     } else {
-      this.stop;
+      self.stop;
       console.log("Stopwatch Stopped and Reset");
-      this.resetNums;
+      self.resetNums();
     }
   };
 
   this.resetNums = function () {
+    // reset all variables
     console.log("All Variables Reset");
     startTime = 0;
     endTime = 0;
     running = false;
     duration = 0;
+    difference = 0;
     minutes = 0;
     seconds = 0;
     hundredths = 0;
-  };
-
-  this.timeCalc = function () {
-    endTime = new Date();
-    duration = endTime.getTime() - startTime.getTime();
-    console.log(duration);
-    minutes = Math.floor(duration / 60000);
-    console.log(minutes);
-    seconds = ((duration % 60000) / 1000).toFixed(0);
-    console.log(seconds);
-    console.log(duration);
-    hundredths = duration - seconds;
-  };
-
-  this.displayUpdate = function () {
-    durationDisplay.innerHTML = `<span class="hundreds">${minutes}</span>:<span class="seconds">${
-      seconds < 10 ? "0" : ""
-    }${seconds}</span>:<span class="hundredths">${hundredths}</span>`;
+    self.displayUpdate();
   };
 
   Object.defineProperty(this, "duration", {
     // Getter for the duration variable
     get: function () {
       return duration;
+    },
+  });
+  //
+  Object.defineProperty(this, "seconds", {
+    // Getter for the duration variable
+    get: function () {
+      return seconds;
+    },
+  });
+  //
+  Object.defineProperty(this, "minutes", {
+    // Getter for the duration variable
+    get: function () {
+      return minutes;
+    },
+  });
+  //
+  Object.defineProperty(this, "hundredths", {
+    // Getter for the duration variable
+    get: function () {
+      return hundredths;
     },
   });
   //
